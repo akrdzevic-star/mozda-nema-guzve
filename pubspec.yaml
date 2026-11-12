@@ -1,0 +1,26 @@
+name: mozda_nema_guzve
+description: Parking uživo u Sarajevu (prototip sa simuliranim podacima)
+publish_to: 'none'
+version: 0.2.0+2
+environment:
+  sdk: '>=3.3.0 <4.0.0'
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_map: ^7.0.2
+  latlong2: ^0.9.1
+  url_launcher: ^6.3.0
+  shared_preferences: ^2.3.2
+dev_dependencies:
+  flutter_launcher_icons: ^0.14.1
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/logo.png
+    - assets/mark.png
+flutter_launcher_icons:
+  android: true
+  ios: false
+  image_path: "assets/icon.png"
+  adaptive_icon_background: "#09401A"
+  adaptive_icon_foreground: "assets/icon_fg.png"

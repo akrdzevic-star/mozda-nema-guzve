@@ -1,0 +1,32 @@
+name: Build APK
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, master]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      - name: Generiši Android projekat
+        run: flutter create --platforms=android --org ba.mozdanemaguzve --project-name mozda_nema_guzve .
+      - name: Dozvole (internet) i naziv aplikacije
+        run: |
+          M=android/app/src/main/AndroidManifest.xml
+          sed -i 's#<application#<uses-permission android:name="android.permission.INTERNET"/>\n    <queries><intent><action android:name="android.intent.action.VIEW"/><data android:scheme="https"/></intent></queries>\n    <application#' $M
+          sed -i 's#android:label="[^"]*"#android:label="Možda nema gužve"#' $M
+      - run: flutter pub get
+      - name: Ikona aplikacije
+        run: dart run flutter_launcher_icons
+      - run: flutter build apk --release
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mozda-nema-guzve-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
