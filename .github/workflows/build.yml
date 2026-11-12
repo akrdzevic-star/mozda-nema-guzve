@@ -1,5 +1,5 @@
 yaml
-name: Build APK
+name: build.yml
 on:
   workflow_dispatch:
   push:
